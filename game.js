@@ -2425,7 +2425,9 @@
     },
 
     tick(force = false) {
-      if (this.dirty) this.refreshAll();
+      // `refreshAll()` termine par `tick(true)` : sans ce garde-fou, les deux
+      // méthodes s'appellent mutuellement à l'infini (stack overflow au boot).
+      if (this.dirty && !force) this.refreshAll();
       const unit = Game.activeUnit;
       if (!unit) return;
 
