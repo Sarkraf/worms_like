@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Prisme — duel d'artillerie au tour par tour, jeu original en HTML5 Canvas.">
+  <meta name="theme-color" content="#223052">
+  <title>Prisme — Duel d'artillerie</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app">
+
+    <!-- ============ Barre supérieure ============ -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">PRISME</span>
+        <span class="brand__tag">duel d'artillerie</span>
+      </div>
+
+      <div class="topbar__center">
+        <span id="turnBadge" class="turn-badge">Prisme</span>
+        <span id="roundBadge" class="round-badge">Manche 1</span>
+      </div>
+
+      <div class="topbar__right">
+        <div class="wind" title="Le vent dévie les projectiles. Il change à chaque manche.">
+          <span class="wind__label">Vent</span>
+          <span id="windArrows" class="wind__arrows" aria-hidden="true">—</span>
+          <span id="windValue" class="wind__value">0.0</span>
+        </div>
+        <button id="soundBtn" class="icon-btn" type="button" aria-pressed="true" title="Activer / couper le son (M)">♪</button>
+        <button id="menuBtn" class="icon-btn" type="button" title="Menu / nouvelle configuration">☰</button>
+      </div>
+    </header>
+
+    <!-- ============ Scène de jeu ============ -->
+    <main id="stage" class="stage">
+      <canvas id="game" width="1280" height="720" aria-label="Terrain d'artillerie destructible"></canvas>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      <div class="stage__corner" aria-hidden="true">PRISME · v1</div>
+    </main>
+
+    <!-- ============ Tableau de bord ============ -->
+    <footer class="hud">
+      <!-- Équipe joueur -->
+      <section class="team team--a" aria-label="Équipe Prisme">
+        <header class="team__head">
+          <span class="team__name" id="teamAName">Prisme</span>
+          <span class="team__hp" id="teamAHealth">100%</span>
+        </header>
+        <div id="rosterA" class="roster"></div>
+      </section>
+
+      <!-- Panneau central -->
+      <section class="panel">
+        <div class="panel__top">
+          <div id="phasePill" class="phase">Prêt</div>
+          <p id="hint" class="hint">Choisissez une configuration pour commencer.</p>
+        </div>
+
+        <div class="panel__main">
+          <div id="weapons" class="weapons" role="group" aria-label="Arsenal"></div>
+          <div class="readouts" aria-live="off">
+            <span class="readout"><em>Angle</em><strong id="angleValue">45°</strong></span>
+            <span class="readout"><em>Puissance</em><strong id="powerValue">55%</strong></span>
+            <span class="readout"><em>Marche</em><strong id="moveValue">0 px</strong></span>
+          </div>
+          <div class="panel__actions">
+            <button id="actionBtn" class="action-btn" type="button">Valider la position</button>
+            <button id="skipBtn" class="ghost-btn" type="button">Fin de tour</button>
+          </div>
+        </div>
+
+        <div id="turnQueue" class="queue" aria-label="Ordre de jeu"></div>
+      </section>
+
+      <!-- Équipe adverse -->
+      <section class="team team--b" aria-label="Équipe Ambre">
+        <header class="team__head">
+          <span class="team__name" id="teamBName">Ambre</span>
+          <span class="team__hp" id="teamBHealth">100%</span>
+        </header>
+        <div id="rosterB" class="roster"></div>
+      </section>
+    </footer>
+
+    <!-- ============ Calques (menu, fin de partie) ============ -->
+    <div id="overlay" class="overlay is-open">
+      <div id="overlayCard" class="overlay__card"></div>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
